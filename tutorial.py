@@ -3,11 +3,21 @@ from manim import *
 
 class BinaryMultiplication(Scene):
     def construct(self):
-        multiplicand = Text('1010', color=BLUE)
-        multiplier = Text('1101', color=ORANGE).next_to(multiplicand, DOWN)
+        cand_bits = [Text('1', color=BLUE), Text('0', color=BLUE), Text('1', color=BLUE), Text('0', color=BLUE)]
+        plier_bits = [Text('1', color=ORANGE), Text('1', color=ORANGE), Text('0', color=ORANGE), Text('1', color=ORANGE)]
+        
+        multiplicand = VGroup(cand_bits[0], cand_bits[1], cand_bits[2], cand_bits[3])        
+        multiplier = VGroup(plier_bits[0], plier_bits[1], plier_bits[2], plier_bits[3])
+
+        for i in range(1, 4):
+            cand_bits[i].next_to(cand_bits[i-1], RIGHT)
+            plier_bits[i].next_to(plier_bits[i-1], RIGHT) 
+        
         self.play(Write(multiplicand))
+        self.play(multiplicand.animate.shift(2*LEFT))
         self.wait(1)
         self.play(Write(multiplier))
+        self.play(multiplier.animate.shift(2*LEFT))
         
         # moving multiplicand to top left
         self.play(multiplicand.animate.shift(2.5*UP).shift(4*LEFT).scale(0.6))
