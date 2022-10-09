@@ -1,2 +1,2 @@
-# Linalg
-Beautiful Linear Algebra Visualizations Made Using Manim
+# Pave
+Helpful Utilities & Beautiful Visualizations
