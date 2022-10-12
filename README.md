@@ -1,2 +1,8 @@
-# Linalg
-Beautiful Linear Algebra Visualizations Made Using Manim
+# Pave
+Helpful Utilities & Beautiful Visualizations
+
+## Computer Architecture Topics
+1. Fast Binary Multiplication `visualization`
+
+## Information Theory
+1. Huffman Coding Scheme `utility`
