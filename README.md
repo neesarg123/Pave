@@ -1,11 +1,11 @@
 # Pave :building_construction:
 Helpful Utilities & Beautiful Visualizations
 
-## Computer Architecture Topics
+## Computer Architecture Topics :computer:
 1. Fast Binary Multiplication `visualization`
 
-## Information Theory
+## Information Theory :information_source:
 1. Huffman Coding Scheme `utility`
 
-## Linear Algebra
+## Linear Algebra :arrow_upper_right:
 1. Gauss Jordan Elimination `utility`
