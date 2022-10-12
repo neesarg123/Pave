@@ -6,3 +6,6 @@ Helpful Utilities & Beautiful Visualizations
 
 ## Information Theory
 1. Huffman Coding Scheme `utility`
+
+## Linear Algebra
+1. Gauss Jordan Elimination `utility`
