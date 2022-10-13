@@ -46,3 +46,13 @@ def test_add_rows(ensure_2D, A, r1, r2, O):
 def test_sort_rows(ensure_2D, A, A_O):
     assert sort_rows(A) == A_O
 
+
+@pytest.mark.parametrize("A, A_O", [([[0, 24, 2], [2, 4, 3], [40, 1, 2]], [[40, 1, 2], [2, 4, 3], [0, 24, 2]])])
+def test_bubble_up_highest_leading_entry(ensure_2D, A, A_O):
+    assert bubble_up_highest_leading_entry(A) == A_O
+
+
+@pytest.mark.parametrize("A, O", [([[0, 1, 2], [1, 3, 2], [0, 0, 1]], True)])
+def test_check_all_leading_entries_one(A, O):
+    assert check_all_leading_entries_one(A) == O
+

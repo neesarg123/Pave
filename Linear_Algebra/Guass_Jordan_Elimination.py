@@ -103,6 +103,27 @@ def find_leading_entry(r):
     return {}
 
 
+def bubble_up_highest_leading_entry(A):
+    """
+    Places row with the highest leading entry to the very top of the Augmented Matrix A
+
+    :param A: 2D array representing an Augmented Matrix (m x n)
+    :return: A
+    """
+
+    max_leading_entry = find_leading_entry(A, 0)['value']
+    max_leading_entry_rid = 0
+    for rid, row in enumerate(A):
+        row_le = find_leading_entry(row)
+        if row_le['value'] > max_leading_entry:
+            max_leading_entry = row_le['value']
+            max_leading_entry_rid = rid
+
+    swap(A, r1=0, r2=max_leading_entry_rid)
+    
+    return A
+
+
 def multiply_row(A, r, s):
     """
     Multiplies a given row r of Augmented Matrix A with given scalar value s
@@ -127,6 +148,20 @@ def add_two_rows(A, r1, r2):
     """
 
     return [val_r1 + val_r2 for val_r1, val_r2 in zip(A[r1], A[r2])]
+
+
+def check_all_leading_entries_one(A):
+    """
+    Determines whether all NON-ZERO rows' leading entry is 1
+
+    :param A: 2D array representing an Augmented Matrix (m x n)
+    :return: True or False
+    """
+
+    for row in A:
+        if find_leading_entry(row)['value'] != 1:
+            return False
+    return True
 
     
 def sort_rows(A):
