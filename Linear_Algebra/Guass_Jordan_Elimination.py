@@ -39,10 +39,14 @@ def rref(A):
     zeros_to_bottom(A)
     while not check_all_leading_entries_one(A):
         bubble_up_highest_leading_entry(A)
-        A[0] = multiply_row(A, 0, 1 / find_leading_entry(A, 0))
+        leading_entry_first_row = find_leading_entry(A, 0)
+        A[0] = multiply_row(A, 0, 1 / leading_entry_first_row['value'])
         # TODO: step 4
-
-
+        # Find the column index  
+        leading_entry_col_idx = leading_entry_first_row['col_idx']
+        # At that column index, every row (except for row 0) value needs to be 0
+        # Multiply row 0 with (-) leading entry of every other row
+        # Add the above multiple of row 0 with each corresponding row 
     return A
 
 
