@@ -35,6 +35,13 @@ def rref(A):
         5. Repeat steps 2-4 until the leading entries of all non-zero rows is 1
         6. Ensure the leading entry of a row is to the right of the leading entry of the previous row
     """
+    
+    zeros_to_bottom(A)
+    while not check_all_leading_entries_one(A):
+        bubble_up_highest_leading_entry(A)
+        A[0] = multiply_row(A, 0, 1 / find_leading_entry(A, 0))
+        # TODO: step 4
+
 
     return A
 
