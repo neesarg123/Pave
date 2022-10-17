@@ -27,26 +27,17 @@ def rref(A):
     :return: 2D array Matrix A in Reduced Row Echelon Form
 
     Algorithm:
+    - Begin at Row, R = 0; Column, C = 0
         1. Ensure rows containing all zeros are below all other rows
-        2. Swap rows such that the row with highest NON-ZERO leading entry is the 1st row
+        2. Swap rows such that the row with highest NON-ZERO leading entry at column C is the 1st row
+            - Skip check for first row when R > 0, in other words when C > 0
         3. Multiply 1st row with a scalar such that the NON-ZERO leading entry is 1
         4. Add (+ or -) scalar multiples of the 1st row with all other non-zero rows such that the other column values
            are 0 wherever the leading entry of the 1st row is 1
         5. Repeat steps 2-4 until the leading entries of all non-zero rows is 1
         6. Ensure the leading entry of a row is to the right of the leading entry of the previous row
     """
-    
-    zeros_to_bottom(A)
-    while not check_all_leading_entries_one(A):
-        bubble_up_highest_leading_entry(A)
-        leading_entry_first_row = find_leading_entry(A, 0)
-        A[0] = multiply_row(A, 0, 1 / leading_entry_first_row['value'])
-        # TODO: step 4
-        # Find the column index  
-        leading_entry_col_idx = leading_entry_first_row['col_idx']
-        # At that column index, every row (except for row 0) value needs to be 0
-        # Multiply row 0 with (-) leading entry of every other row
-        # Add the above multiple of row 0 with each corresponding row 
+
     return A
 
 
@@ -58,9 +49,8 @@ def zeros_to_bottom(A):
     :return: A
     """
 
-    A.sort(key=lambda x: x == [0]*len(x))
+    A.sort(key=lambda x: x[:-1] == [0] * (len(x) - 1))
         
-
     return A
 
 
@@ -91,11 +81,11 @@ def find_leading_entry(A, r):
     :return: dict containing integer value and column index of the first NON-ZERO value in the given row of A
     """
 
-    for col_ix, col_val in enumerate(A[r]):
+    for col_ix, col_val in enumerate(A[r][:-1]):
         if col_val != 0:
             return {'value': col_val, 'col_idx': col_ix}
 
-    return {}
+    return {'col_idx': float('inf')}
 
 
 @dispatch(list)
@@ -107,32 +97,11 @@ def find_leading_entry(r):
     :return: dict containing integer value and column index of the first NON-ZERO value in the given row
     """
 
-    for col_ix, col_val in enumerate(r):
+    for col_ix, col_val in enumerate(r[:-1]):
         if col_val != 0:
             return {'value': col_val, 'col_idx': col_ix}
     
-    return {}
-
-
-def bubble_up_highest_leading_entry(A):
-    """
-    Places row with the highest leading entry to the very top of the Augmented Matrix A
-
-    :param A: 2D array representing an Augmented Matrix (m x n)
-    :return: A
-    """
-
-    max_leading_entry = find_leading_entry(A, 0)['value']
-    max_leading_entry_rid = 0
-    for rid, row in enumerate(A):
-        row_le = find_leading_entry(row)
-        if row_le['value'] > max_leading_entry:
-            max_leading_entry = row_le['value']
-            max_leading_entry_rid = rid
-
-    swap(A, r1=0, r2=max_leading_entry_rid)
-    
-    return A
+    return {'col_idx': float('inf')}
 
 
 def multiply_row(A, r, s):
@@ -148,6 +117,7 @@ def multiply_row(A, r, s):
     return [curr_val * s for curr_val in A[r]]
 
 
+@dispatch(list, int, int)
 def add_two_rows(A, r1, r2):
     """
     Adds two given rows of the Augmented Matrix A
@@ -161,6 +131,20 @@ def add_two_rows(A, r1, r2):
     return [val_r1 + val_r2 for val_r1, val_r2 in zip(A[r1], A[r2])]
 
 
+@dispatch(list, list, int)
+def add_two_rows(A, row, r2):
+    """
+    Adds a given row to a specified row in the Matrix A
+
+    :param A: 2D array representing an Augmented Matrix (m x n)
+    :param row: list of integers containing n elements
+    :param r2: integer representing row of A
+    :return: list of integers representing the addition of tow rows of A
+    """
+
+    return [val_r1 + val_r2 for val_r1, val_r2 in zip(row, A[r2])]
+
+
 def check_all_leading_entries_one(A):
     """
     Determines whether all NON-ZERO rows' leading entry is 1
@@ -170,8 +154,9 @@ def check_all_leading_entries_one(A):
     """
 
     for row in A:
-        if find_leading_entry(row)['value'] != 1:
-            return False
+        if row[:-1] != [0] * (len(A[0]) - 1):
+            if find_leading_entry(row)['value'] != 1:
+                return False
     return True
 
     
@@ -187,4 +172,11 @@ def sort_rows(A):
     A.sort(key=lambda x: find_leading_entry(x)['col_idx'])
 
     return A
+
+
+def main():
+    A = [[1, 4, 1, 1, 0], [1, 2, 6, 2, 0], [1, 4, 4, 1, 0], [1, 2, 2, 2, 0]]
+    print(rref(A))
+
+main()
 

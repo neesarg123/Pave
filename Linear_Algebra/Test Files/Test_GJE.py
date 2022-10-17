@@ -11,7 +11,7 @@ def ensure_2D(A):
             assert len(A[r]) == len(A[r + 1]), "Row lengths must be equal!"
 
 
-@pytest.mark.parametrize("A, A_O", [([[0, 0, 0],[1, 1, 1], [0, 0, 0]], [[1, 1, 1], [0, 0, 0], [0, 0, 0]])])
+@pytest.mark.parametrize("A, A_O", [([[0, 0, 0],[1, 1, 1], [0, 0, 0]], [[1, 1, 1], [0, 0, 0], [0, 0, 0]]), ([[1, 5, 1], [2, 11, 5]], [[1, 5, 1], [2, 11, 5]])])
 def test_zeros_to_bottom(ensure_2D, A, A_O):
     assert zeros_to_bottom(A) == A_O
 
@@ -23,7 +23,7 @@ def test_swap(ensure_2D, A, r1, r2, A_O):
     assert swap(A, r1, r2) == A_O
 
 
-@pytest.mark.parametrize("A, r, d", [([[0, 0, 1], [0, 0, 0]], 0, {'value': 1, 'col_idx': 2})])
+@pytest.mark.parametrize("A, r, d", [([[0, 1, 1], [0, 0, 0]], 0, {'value': 1, 'col_idx': 1})])
 def test_find_leading_entry(ensure_2D, A, r, d):
     assert type(r) == int
     assert find_leading_entry(A, r) == d
@@ -35,6 +35,7 @@ def test_multiply_row(ensure_2D, A, r, s, O):
     assert type(s) == int
     assert multiply_row(A, r, s) == O
 
+
 @pytest.mark.parametrize("A, r1, r2, O", [([[1, 2, 3], [2, 0, -1]], 0, 1, [3, 2, 2])])
 def test_add_rows(ensure_2D, A, r1, r2, O):
     assert type(r1) == int
@@ -42,17 +43,24 @@ def test_add_rows(ensure_2D, A, r1, r2, O):
     assert add_two_rows(A, r1, r2) == O
 
 
+@pytest.mark.parametrize("A, row, r2, O", [([[1, 2, 3], [2, 0, -1]], [1, 2, 3], 1, [3, 2, 2])])
+def test_add_rows_2(ensure_2D, A, row, r2, O):
+    assert type(row) == list
+    assert type(r2) == int
+    assert add_two_rows(A, row, r2) == O
+
+
 @pytest.mark.parametrize("A, A_O", [([[0, 1, 0],[0, 0, 1], [1, 0, 0]], [[1, 0, 0], [0, 1, 0], [0, 0, 1]])])
 def test_sort_rows(ensure_2D, A, A_O):
     assert sort_rows(A) == A_O
 
 
-@pytest.mark.parametrize("A, A_O", [([[0, 24, 2], [2, 4, 3], [40, 1, 2]], [[40, 1, 2], [2, 4, 3], [0, 24, 2]])])
-def test_bubble_up_highest_leading_entry(ensure_2D, A, A_O):
-    assert bubble_up_highest_leading_entry(A) == A_O
-
-
 @pytest.mark.parametrize("A, O", [([[0, 1, 2], [1, 3, 2], [0, 0, 1]], True)])
-def test_check_all_leading_entries_one(A, O):
+def test_check_all_leading_entries_one(ensure_2D, A, O):
     assert check_all_leading_entries_one(A) == O
+
+
+# @pytest.mark.parametrize("A, A_O", [([[1, 5, 1], [2, 11, 5], [0, 0, 0], [3, 2, 6]], [[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0]])])
+# def test_rref(ensure_2D, A, A_O):
+#     assert rref(A) == A_O
 
