@@ -55,11 +55,6 @@ def test_sort_rows(ensure_2D, A, A_O):
     assert sort_rows(A) == A_O
 
 
-@pytest.mark.parametrize("A, O", [([[0, 1, 2], [1, 3, 2], [0, 0, 1]], True)])
-def test_check_all_leading_entries_one(ensure_2D, A, O):
-    assert check_all_leading_entries_one(A) == O
-
-
 # @pytest.mark.parametrize("A, A_O", [([[1, 5, 1], [2, 11, 5], [0, 0, 0], [3, 2, 6]], [[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0]])])
 # def test_rref(ensure_2D, A, A_O):
 #     assert rref(A) == A_O
