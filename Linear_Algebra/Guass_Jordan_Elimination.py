@@ -28,14 +28,13 @@ def rref(A):
     :return: 2D array Matrix A in Reduced Row Echelon Form
 
     Algorithm:
-    - Begin at Row, R = 0; Column, C = 0
+    - Begin at Row, R = 0; Column, C = 0; Frontier = 0
         1. Ensure rows containing all zeros are below all other rows
-        2. Swap rows such that the row with highest NON-ZERO leading entry at column C is the 1st row
-            - Skip check for first row when R > 0, in other words when C > 0
-        3. Multiply 1st row with a scalar such that the NON-ZERO leading entry is 1
-        4. Add (+ or -) scalar multiples of the 1st row with all other non-zero rows such that the other column values
-           are 0 wherever the leading entry of the 1st row is 1
-        5. Repeat steps 2-4 until the leading entries of all non-zero rows is 1
+        2. Swap rows such that the row with highest NON-ZERO leading entry at column C becomes row at Frontier 
+        3. Multiply Frontier row with a scalar such that the NON-ZERO leading entry is 1
+        4. Add (+ or -) scalar multiples of the Frontier row with all other non-zero rows (above and below Frontier) 
+           such that the other column values at C are 0 wherever the leading entry of the Frontier row is 1
+        5. Increment R and C and Frontier, and repeat steps 2 - 4 until R reaches len(A)
         6. Ensure the leading entry of a row is to the right of the leading entry of the previous row
     """
 
