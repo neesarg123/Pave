@@ -38,31 +38,9 @@ def rref(A):
         6. Ensure the leading entry of a row is to the right of the leading entry of the previous row
     """
 
-    col_itr = 0
     zeros_to_bottom(A)
-    get_top_row(A, column_index=col_itr, avoid_row=-1)  # do not ignore any rows
-    print("After first top row call", A)
-    print()
-    while col_itr < len(A[0]) - 1:
-        print("A:", A)
-        first_row_leading_entry = find_leading_entry(A, 0)
-        A[0] = multiply_row(A, 0, 1 / first_row_leading_entry['value'])
-        for row_idx, row in enumerate(A):
-            if row_idx != 0:  # skip first row
-                print("At row:", row_idx)
-                first_row_multiple = row[first_row_leading_entry['col_idx']]
-                print("Multiple for first row:", first_row_multiple)
-                first_row_multiplied = multiply_row(A, r=0, s=-first_row_multiple)
-                print("Adding the row with:", first_row_multiplied)
-                print("Before Add:", A[row_idx])
-                A[row_idx] = add_two_rows(A, first_row_multiplied, row_idx)
-                print("After Add:", A[row_idx])
-        
-        print()
-        col_itr += 1
-        get_top_row(A, col_itr)  # avoid checking first row by default 
 
-    sort_rows(A)
+        
 
     return A
 
@@ -97,24 +75,24 @@ def swap(A, r1, r2):
     return A
 
 
-def get_top_row(A, column_index, avoid_row=0):
+def get_top_row(A, column_index, frontier_row=0):
     """
-    Swap rows such that the row with highest NON-ZERO leading entry at given column is the 1st row
+    Swap rows such that the row with highest NON-ZERO leading entry at given column is the Frontier row
     
     :param A: 2D array representing an Augmented Matrix (m x n)
     :param column_index: integer representing which column to find maximum value
-    :avoid_row: defaults to 0, indicating first row should be avoided for maximum value search
+    :frontier_row: defaults to 0, indicating first row is the starting Frontier row
     :return: A
     """
 
     max_column_value = max_row_id = -math.inf
 
     for row_idx, row in enumerate(A):
-        if row != avoid_row:
+        if row_idx >= frontier_row:
             if row[column_index] > max_column_value:
                 max_column_value = row[column_index]
                 max_row_id = row_idx
-    swap(A, r1=0, r2=max_row_id)
+    swap(A, r1=frontier_row, r2=max_row_id)
 
     return A
 
@@ -203,6 +181,28 @@ def sort_rows(A):
     """
     
     A.sort(key=lambda x: find_leading_entry(x)['col_idx'])
+
+    return A
+
+
+def reduce_row(A, r1, r2, column_index):
+    """
+    Given two rows of Augmented Matrix A, reduce row #2 using row #1 such that a given column of row #2
+    becomes 0.
+
+    :param A: 2D array representing an Augmented Matrix (m x n)
+    :param r1: integer, first row, the reference row
+    :param r2: integer, second row, on which to perform operations
+    :param column_index: integer, the column of r2 that needs to be 0
+    :return: A
+    """
+    
+    # first, we simply r1 by multiplying it by 1 / r1[column_index]
+    A[r1] = multiply_row(A, r1, 1 / A[r1][column_index])
+    # now that r1 is scaled properly, we multiply it with -r2[column_index]
+    sub_r1 = multiply_row(A, r1, -A[r2][column_index])
+    # finally, we add the negatively weighted r1 with r2
+    A[r2] = add_two_rows(A, sub_r1, r2)
 
     return A
 

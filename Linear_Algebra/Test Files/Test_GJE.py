@@ -55,7 +55,9 @@ def test_sort_rows(ensure_2D, A, A_O):
     assert sort_rows(A) == A_O
 
 
-# @pytest.mark.parametrize("A, A_O", [([[1, 5, 1], [2, 11, 5], [0, 0, 0], [3, 2, 6]], [[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, 0]])])
-# def test_rref(ensure_2D, A, A_O):
-#     assert rref(A) == A_O
+@pytest.mark.parametrize("A, c_i, f_r, A_O", [([[1, 4, 5], [2, 6, 7], [3, 8, 9]], 0, 0, [[3, 8, 9], [2, 6, 7], [1, 4, 5]])])
+def test_get_top_row(ensure_2D, A, c_i, f_r, A_O):
+    assert get_top_row(A, column_index=0, frontier_row=0) == A_O
+
+
 
