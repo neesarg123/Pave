@@ -39,8 +39,18 @@ def rref(A):
     """
 
     zeros_to_bottom(A)
+    
+    frontier = 0
+    col = 0
 
-        
+    while frontier < len(A):
+        if A[frontier] != [0]*len(A[0]):
+            get_top_row(A, col, frontier)
+            for r in range(len(A)):
+                if r != frontier and A[r] != [0]*len(A[0]):
+                    reduce_row(A, r1=frontier, r2=r, column_index=col)
+        frontier += 1
+        col += 1
 
     return A
 
@@ -196,7 +206,8 @@ def reduce_row(A, r1, r2, column_index):
     :param column_index: integer, the column of r2 that needs to be 0
     :return: A
     """
-    
+    print(r1, r2, column_index)
+    print(A[r1][column_index])
     # first, we simply r1 by multiplying it by 1 / r1[column_index]
     A[r1] = multiply_row(A, r1, 1 / A[r1][column_index])
     # now that r1 is scaled properly, we multiply it with -r2[column_index]
