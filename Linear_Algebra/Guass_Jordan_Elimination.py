@@ -216,10 +216,3 @@ def reduce_row(A, r1, r2, column_index):
 
     return A
 
-
-def main():
-    A = [[1, 4, 1, 1, 0], [1, 2, 6, 2, 0], [1, 4, 4, 1, 0], [1, 2, 2, 2, 0]]
-    print(rref(A))
-
-main()
-
