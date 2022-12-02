@@ -14,7 +14,8 @@ High-Level Algorithm:
         Otherwise, find the non-pivot columns
 """
 
-from Guass_Jordan_Elimination import rref 
+from Guass_Jordan_Elimination import rref, print_result
+from fractions import Fraction 
 
 
 def null_space(A, verbose=True):
@@ -25,9 +26,37 @@ def null_space(A, verbose=True):
     :return: Set of vectors representing the Null Space
     """
     
-    print(rref(A))
+    rref_a = rref(A)
+    print_result(rref_a)
+    
+    pivot_cols = []
+    non_pivot_cols = []
+
+    for col in range(len(A[0])):
+        col_row = get_column(A, col)
+
+        # if the number of 0's in that column is less than the number of rows - 1
+        if col_row.count(0) == len(A) - 1:  
+            pivot_cols.append(col)  # then it's a pivot column 
+        else: 
+            non_pivot_cols.append(col)  # otherwise, it's a non-pivot column
+
+    print(pivot_cols)
+    print(non_pivot_cols)
 
 
-A = [[1, 1, 1, 1], [2, 1, 4, 3], [3, 4, 1, 2]]
+def get_column(A, c):
+    """
+    Returns the column values for all rows of a Matrix A
+
+    :param A: 2D array representing a Matrix (m x n)
+    :param c: Column number to extract
+    """
+
+    return [row[c] for row in A]
+
+
+A = [[Fraction(1, 1), Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)], [Fraction(2, 1), Fraction(1, 1), Fraction(4, 1), Fraction(3, 1)],
+        [Fraction(3, 1), Fraction(4, 1), Fraction(1, 1), Fraction(2, 1)]]
 null_space(A)
 
