@@ -60,7 +60,7 @@ def test_get_top_row(ensure_2D, A, c_i, f_r, A_O):
     assert get_top_row(A, column_index=0, frontier_row=0) == A_O
 
 
-@pytest.mark.parametrize("A, A_O", [([[1, 4, 1, 1, 0], [1, 2, 6, 2, 0], [1, 4, 4, 1, 0], [1, 2, 2, 2, 0]], [[1, 0, 0, 3, 0], [0, 1, 0, -0.5, 0], [0, 0, 1, 0, 0], [0, 0, 0, 0, 0]])])
+@pytest.mark.parametrize("A, A_O", [([[Fraction(1, 1), Fraction(1, 1), Fraction(1, 1), Fraction(1, 1)], [Fraction(2, 1), Fraction(1, 1), Fraction(4, 1), Fraction(3, 1)], [Fraction(3, 1), Fraction(4, 1), Fraction(1, 1), Fraction(2, 1)]], [[Fraction(1, 1), Fraction(0, 1), Fraction(3, 1), Fraction(2, 1)], [Fraction(0, 1), Fraction(1, 1), Fraction(-2, 1), Fraction(-1, 1)], [Fraction(0, 1), Fraction(0, 1), Fraction(0, 1), Fraction(0, 1)]])])
 def test_rref(ensure_2D, A, A_O):
     assert rref(A) == A_O
 

@@ -1,5 +1,6 @@
 from multipledispatch import dispatch
 import math
+from fractions import Fraction
 
 
 """
@@ -51,7 +52,7 @@ def rref(A):
                     reduce_row(A, r1=frontier, r2=r, column_index=col)
         frontier += 1
         col += 1
-
+        
     return A
 
 
@@ -215,4 +216,18 @@ def reduce_row(A, r1, r2, column_index):
         A[r2] = add_two_rows(A, sub_r1, r2)
 
     return A
+
+
+def print_result(A):
+    """
+    Prints the result of the RREF matrix in human-readable form
+
+    :param A: 2D array expected to be a Matrix in RREF form
+    """
+
+    for r in range(len(A)):
+        for c in range(len(A[0])):
+            print(round(float(A[r][c]), 2), end='\t')
+        print()
+
 
