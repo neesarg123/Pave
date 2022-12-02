@@ -9,3 +9,4 @@ Helpful Utilities & Beautiful Visualizations
 
 ## Linear Algebra :arrow_upper_right:
 1. Gauss Jordan Elimination `utility`
+2. Null Space & Linear Independence `utility`
