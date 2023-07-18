@@ -1,4 +1,4 @@
-# Pave :building_construction:
+# Pave ⛏️:
 Helpful Utilities & Beautiful Visualizations
 
 ## Computer Architecture Topics :computer:
